@@ -91,7 +91,8 @@
       if (mat.aprobado) return;
       mat.aprobado = true;
       mat.btn.disabled = true;
-      mat.btn.style.backgroundColor = '#4caf50';
+     mat.btn.classList.add('aprobada');
+
 
       mat.desbloquea.forEach(dest => {
         const destMat = estado[dest];
