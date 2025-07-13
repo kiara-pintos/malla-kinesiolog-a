@@ -1,42 +1,72 @@
+/* Estilos generales */
 body {
-  font-family: Arial, sans-serif;
-  background-color: #e0f7fa;
-  margin: 0;
-  padding: 20px;
+  font-family: sans-serif;
+  background-color: #f0f8ff;
+  text-align: center;
+  margin: 20px;
 }
 
 h1 {
-  text-align: center;
-  color: #0077b6;
+  color: #01579b;
+  margin-bottom: 30px;
 }
 
-.grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
-  gap: 15px;
-  margin-top: 20px;
+/* Contenedor principal de la malla */
+.malla {
+  display: flex;
+  justify-content: center;
+  gap: 20px;
+  flex-wrap: wrap;
+  align-items: flex-start;
 }
 
-.materia {
-  background-color: #b2ebf2;
-  border: 2px solid #00acc1;
+/* Cada columna de año */
+.anio {
+  background-color: #e3f2fd;
   padding: 10px;
   border-radius: 10px;
-  text-align: center;
+  width: 200px;
+  box-shadow: 0 0 5px rgba(0,0,0,0.1);
 }
 
+/* Título del año */
+.anio h2 {
+  color: #0277bd;
+  font-size: 1.1em;
+  margin-bottom: 10px;
+}
+
+/* Cada bloque de materia */
+.materia {
+  margin-bottom: 10px;
+}
+
+/* Botón de materia */
 .materia button {
-  background-color: #0288d1;
-  color: white;
-  border: none;
-  padding: 10px;
-  border-radius: 6px;
-  cursor: pointer;
   width: 100%;
+  padding: 8px;
+  border: none;
+  border-radius: 6px;
+  background-color: #81d4fa; /* celeste */
+  color: #000;
+  font-weight: bold;
+  cursor: pointer;
+  transition: background-color 0.2s;
 }
 
+/* Hover para materias habilitadas */
+.materia button:hover:not(:disabled) {
+  background-color: #4fc3f7;
+}
+
+/* Materias deshabilitadas (gris) */
 .materia button:disabled {
-  background-color: #90a4ae;
+  background-color: #cfd8dc;
   cursor: not-allowed;
 }
 
+/* Materia aprobada (verde) - este color se pone por JS */
+.materia button.aprobada {
+  background-color: #4caf50 !important;
+  color: white;
+}
