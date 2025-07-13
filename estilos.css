@@ -16,8 +16,9 @@ h1 {
   display: flex;
   justify-content: center;
   gap: 20px;
-  flex-wrap: wrap;
+  flex-wrap: nowrap;
   align-items: flex-start;
+  overflow-x: auto;
 }
 
 /* Cada columna de año */
@@ -25,11 +26,11 @@ h1 {
   background-color: #e3f2fd;
   padding: 10px;
   border-radius: 10px;
-  width: 200px;
+  width: 220px;
+  min-width: 200px;
   box-shadow: 0 0 5px rgba(0,0,0,0.1);
 }
 
-/* Título del año */
 .anio h2 {
   color: #0277bd;
   font-size: 1.1em;
@@ -41,13 +42,13 @@ h1 {
   margin-bottom: 10px;
 }
 
-/* Botón de materia */
+/* Botón de materia habilitada y no aprobada */
 .materia button {
   width: 100%;
   padding: 8px;
   border: none;
   border-radius: 6px;
-  background-color: #81d4fa; /* celeste */
+  background-color: #81d4fa; /* celeste claro */
   color: #000;
   font-weight: bold;
   cursor: pointer;
@@ -59,14 +60,15 @@ h1 {
   background-color: #4fc3f7;
 }
 
-/* Materias deshabilitadas (gris) */
+/* Botón deshabilitado (requisitos no cumplidos aún) */
 .materia button:disabled {
   background-color: #cfd8dc;
+  color: #666;
   cursor: not-allowed;
 }
 
-/* Materia aprobada (verde) - este color se pone por JS */
+/* Botón aprobado (azul/celeste oscuro) */
 .materia button.aprobada {
-  background-color: #4caf50 !important;
+  background-color: #0288d1 !important; /* azul más oscuro y lindo */
   color: white;
 }
