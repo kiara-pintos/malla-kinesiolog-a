@@ -1,1 +1,42 @@
+body {
+  font-family: Arial, sans-serif;
+  background-color: #e0f7fa;
+  margin: 0;
+  padding: 20px;
+}
+
+h1 {
+  text-align: center;
+  color: #0077b6;
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  gap: 15px;
+  margin-top: 20px;
+}
+
+.materia {
+  background-color: #b2ebf2;
+  border: 2px solid #00acc1;
+  padding: 10px;
+  border-radius: 10px;
+  text-align: center;
+}
+
+.materia button {
+  background-color: #0288d1;
+  color: white;
+  border: none;
+  padding: 10px;
+  border-radius: 6px;
+  cursor: pointer;
+  width: 100%;
+}
+
+.materia button:disabled {
+  background-color: #90a4ae;
+  cursor: not-allowed;
+}
 
