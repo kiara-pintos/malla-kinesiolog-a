@@ -9,7 +9,98 @@
 <body>
   <h1>Malla Interactiva de Kinesiología</h1>
   <div class="grid" id="contenedor-materias"></div>
-  <script src="script.js"></script>
+
+  <script>
+    const materias = [
+      // Primer año
+      { id: 'filosofia', nombre: 'Filosofía', desbloquea: ['fund_teologia'] },
+      { id: 'quimica', nombre: 'Química Biológica', desbloquea: ['fisioterapia', 'farmacologia'] },
+      { id: 'anatomia', nombre: 'Anatomía y Fisiología', desbloquea: ['biomecanica', 'semioclinica', 'tecnicas1', 'kinefilaxia', 'ortopedia'] },
+      { id: 'biologia', nombre: 'Biología Celular, Histología y Embriología', desbloquea: ['biomecanica', 'semioclinica', 'kinefilaxia', 'farmacologia', 'ortopedia'] },
+      { id: 'fisica', nombre: 'Física Biológica', desbloquea: ['fisioterapia'] },
+      { id: 'salud', nombre: 'Salud Colectiva', desbloquea: ['modulo1', 'fund_teologia', 'kinefilaxia'] },
+      { id: 'modulo1', nombre: 'Módulo de Integración Disciplinar I', desbloquea: ['modulo2'] },
+      { id: 'psicologia', nombre: 'Psicología General y del Desarrollo', desbloquea: ['psicomotricidad'] },
+
+      // Segundo año
+      { id: 'biomecanica', nombre: 'Biomecánica y Ergonomía', requisitos: ['anatomia', 'biologia'], desbloquea: ['tecnicas2', 'psicomotricidad', 'deportiva', 'ocupacional', 'electiva'] },
+      { id: 'semioclinica', nombre: 'Semiopatología Clínica', requisitos: ['anatomia', 'biologia'], desbloquea: ['tecnicas2', 'ocupacional', 'semioquir', 'pps1', 'clinica_medica', 'electiva'] },
+      { id: 'tecnicas1', nombre: 'Técnicas Kinésicas I', requisitos: ['anatomia'], desbloquea: ['tecnicas2', 'deportiva', 'ocupacional', 'semioquir', 'pps1', 'electiva'] },
+      { id: 'modulo2', nombre: 'Módulo de Integración Disciplinar II', requisitos: ['modulo1'], desbloquea: ['pps1', 'metodologia', 'electiva'] },
+      { id: 'kinefilaxia', nombre: 'Kinefilaxia y APS', requisitos: ['anatomia', 'biologia', 'salud'], desbloquea: ['legal', 'tecnicas2', 'psicomotricidad', 'deportiva', 'ocupacional', 'electiva'] },
+      { id: 'farmacologia', nombre: 'Farmacología', requisitos: ['quimica', 'biologia'], desbloquea: ['cosmiatrica', 'electiva'] },
+      { id: 'fisioterapia', nombre: 'Fisioterapia', requisitos: ['quimica', 'fisica'], desbloquea: ['cosmiatrica', 'tecnicas2', 'deportiva', 'semioquir', 'electiva'] },
+      { id: 'ortopedia', nombre: 'Ortopedia y Traumatología - Prótesis y Ortesis', requisitos: ['anatomia', 'biologia'], desbloquea: ['legal', 'deportiva', 'semioquir', 'electiva', 'pps3'] },
+      { id: 'fund_teologia', nombre: 'Fundamentos de Teología', requisitos: ['filosofia', 'salud'], desbloquea: ['teo_dogmatica', 'electiva'] },
+
+      // Tercer año
+      { id: 'cosmiatrica', nombre: 'Kinefisiatría Cosmiátrica', requisitos: ['farmacologia', 'fisioterapia'], desbloquea: ['pps2', 'pediatrica'] },
+      { id: 'legal', nombre: 'Kinefisiatría Legal y Deontológica', requisitos: ['kinefilaxia', 'ortopedia'], desbloquea: ['gestion', 'optativa'] },
+      { id: 'tecnicas2', nombre: 'Técnicas Kinésicas II', requisitos: ['biomecanica', 'tecnicas1', 'kinefilaxia', 'fisioterapia'], desbloquea: ['tecnicas3', 'optativa'] },
+      { id: 'teo_dogmatica', nombre: 'Teología Dogmática', requisitos: ['fund_teologia'], desbloquea: ['teo_moral', 'optativa'] },
+      { id: 'psicomotricidad', nombre: 'Psicomotricidad y Neurodesarrollo', requisitos: ['psicologia', 'biomecanica', 'kinefilaxia'], desbloquea: ['pediatrica', 'optativa'] },
+      { id: 'deportiva', nombre: 'Kinesiología Deportiva', requisitos: ['biomecanica', 'tecnicas1', 'kinefilaxia', 'fisioterapia', 'ortopedia'], desbloquea: ['optativa'] },
+      { id: 'ocupacional', nombre: 'Kinefisiatría Ocupacional y Laboral', requisitos: ['biomecanica', 'semioclinica', 'tecnicas1', 'kinefilaxia'], desbloquea: ['pps2', 'gestion', 'optativa'] },
+      { id: 'semioquir', nombre: 'Semiopatología Quirúrgica', requisitos: ['semioclinica', 'tecnicas1', 'fisioterapia', 'ortopedia'], desbloquea: ['clinica_quirurgica', 'pps2', 'pediatrica', 'optativa'] },
+      { id: 'pps1', nombre: 'Práctica Profesional Supervisada I', requisitos: ['semioclinica', 'tecnicas1', 'modulo2'], desbloquea: ['pps2', 'pediatrica', 'optativa'] },
+      { id: 'clinica_medica', nombre: 'Clínica Kinefisiátrica Médica', requisitos: ['semioclinica'], desbloquea: ['clinica_quirurgica', 'pps2', 'pps3'] },
+
+      // Cuarto año
+      { id: 'clinica_quirurgica', nombre: 'Clínica Kinefisiátrica Quirúrgica', requisitos: ['semioquir', 'clinica_medica'], desbloquea: ['optativa', 'pps3'] },
+      { id: 'metodologia', nombre: 'Metodología de la Investigación y Diseño de Proyecto TIF', requisitos: ['modulo2'], desbloquea: ['taller'] },
+      { id: 'pps2', nombre: 'Práctica Profesional Supervisada II', requisitos: ['pps1', 'cosmiatrica', 'ocupacional', 'semioquir'], desbloquea: ['pps3'] },
+      { id: 'tecnicas3', nombre: 'Técnicas Kinésicas III', requisitos: ['tecnicas2'] },
+      { id: 'teo_moral', nombre: 'Teología Moral y Doctrina Social de la Iglesia', requisitos: ['teo_dogmatica'] },
+      { id: 'pediatrica', nombre: 'Kinefisiatría Pediátrica', requisitos: ['cosmiatrica', 'psicomotricidad', 'semioquir', 'pps1'], desbloquea: ['pps3'] },
+      { id: 'gestion', nombre: 'Gestión de Servicios de Salud', requisitos: ['legal', 'ocupacional'] },
+      { id: 'electiva', nombre: 'Electiva', requisitos: ['farmacologia', 'fisioterapia', 'semioclinica', 'tecnicas1', 'modulo2', 'kinefilaxia', 'biomecanica'] },
+
+      // Quinto año
+      { id: 'optativa', nombre: 'Optativa', requisitos: ['pps1', 'psicomotricidad', 'legal', 'deportiva', 'teo_dogmatica', 'ocupacional', 'cosmiatrica', 'semioquir', 'clinica_quirurgica'] },
+      { id: 'taller', nombre: 'Taller: Trabajo Integrador Final', requisitos: ['metodologia'] },
+      { id: 'pps3', nombre: 'Práctica Profesional Supervisada III', requisitos: ['ortopedia', 'clinica_medica', 'clinica_quirurgica', 'pediatrica', 'pps2'] },
+    ];
+
+    const estado = {};
+
+    function crearBoton(m) {
+      const div = document.createElement('div');
+      div.className = 'materia';
+
+      const btn = document.createElement('button');
+      btn.textContent = m.nombre;
+      btn.disabled = m.requisitos && m.requisitos.length > 0;
+      btn.onclick = () => aprobar(m.id);
+
+      div.appendChild(btn);
+      document.getElementById('contenedor-materias').appendChild(div);
+
+      estado[m.id] = {
+        aprobado: false,
+        requisitos: m.requisitos || [],
+        desbloquea: m.desbloquea || [],
+        btn
+      };
+    }
+
+    function aprobar(id) {
+      const mat = estado[id];
+      if (mat.aprobado) return;
+      mat.aprobado = true;
+      mat.btn.disabled = true;
+      mat.btn.style.backgroundColor = '#4caf50';
+
+      mat.desbloquea.forEach(dest => {
+        const destMat = estado[dest];
+        if (!destMat) return;
+        const ready = destMat.requisitos.every(r => estado[r]?.aprobado);
+        if (ready) destMat.btn.disabled = false;
+      });
+    }
+
+    materias.forEach(crearBoton);
+  </script>
 </body>
 </html>
+
 
